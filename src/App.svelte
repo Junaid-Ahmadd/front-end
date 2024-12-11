@@ -71,9 +71,11 @@
 </script>
 
 
-
 <main class="container">
-  <div class="header">...</div>
+  <div class="header">
+    <h1>Web Crawler & Screenshot Tool</h1>
+    <p class="subtitle">Uncover website structures and capture visual representations effortlessly.</p>
+  </div>
 
   <div class="input-section">
     <div class="url-input">
@@ -90,7 +92,9 @@
         disabled={!url || isProcessing}
       >
         {#if isProcessing}
-          <svg class="spinner" viewBox="0 0 24 24">...</svg>
+          <svg class="spinner" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="4" />
+          </svg>
           Processing...
         {:else}
           <span>🚀 Start Crawling</span>
@@ -99,7 +103,16 @@
     </div>
 
     {#if totalLinks > 0}
-      <div class="stats">...</div>
+      <div class="stats">
+        <div class="stat">
+          <span class="label">Unique Pages Found</span>
+          <span class="value">{totalLinks}</span>
+        </div>
+        <div class="stat">
+          <span class="label">Screenshots Captured</span>
+          <span class="value">{screenshots.size}</span>
+        </div>
+      </div>
     {/if}
   </div>
 
@@ -108,8 +121,7 @@
         class="view-canvas toggle-canvas-btn"
         on:click={toggleCanvas}
       >
-        <span>{isCanvasOpen ? 'Hide Screenshots' : 'View Screenshots'}</span>
-        📸
+        {isCanvasOpen ? 'Hide Screenshots' : 'View Screenshots'}
       </button>
     {/if}
 
@@ -128,17 +140,24 @@
       </div>
     {/if}
 
+    
   </div>
 
   {#if isCanvasOpen}
-    <InfiniteCanvas {screenshots} {crawledLinks} isOpen={isCanvasOpen} onClose={toggleCanvas} />
+    <InfiniteCanvas
+      {screenshots}
+      {crawledLinks}
+      isOpen={isCanvasOpen}
+      onClose={toggleCanvas}
+    />
   {/if}
 </main>
 
 <style>
+  /* Global variables for colors and fonts */
   :root {
     --primary: #6c63ff;
-    --primary-hover: #5048d1;
+    --primary-hover: #584fd1;
     --secondary: #f3f4f6;
     --text-primary: #333;
     --text-secondary: #666;
@@ -147,39 +166,73 @@
     --shadow: rgba(0, 0, 0, 0.1);
     --border-radius: 10px;
     --font-family: 'Roboto', sans-serif;
-    --input-padding: 0.75rem;
-    --button-padding: 0.8rem;
+  }
+
+  /* General styles */
+  body {
+    font-family: var(--font-family);
+    color: var(--text-primary);
+    background: var(--background);
+    margin: 0;
+    padding: 0;
   }
 
   .container {
-    max-width: 100%;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 1rem 16px;
+    padding: 2rem;
     box-shadow: 0 4px 6px var(--shadow);
     border-radius: var(--border-radius);
     background: var(--surface);
-    display: flex;
-    flex-direction: column;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin: 0;
+    background: linear-gradient(45deg, var(--primary), var(--primary-hover));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .subtitle {
+    color: var(--text-secondary);
+    font-size: 1rem;
+  }
+
+  .input-section {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, var(--primary-hover), var(--primary));
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px var(--shadow);
+    color: white;
   }
 
   .url-input {
     display: flex;
-    gap: 0.75rem;
+    gap: 1rem;
     align-items: center;
-    flex-wrap: wrap;
   }
 
   input {
     flex: 1;
-    padding: var(--input-padding);
+    padding: 10px;
     border: none;
     border-radius: var(--border-radius);
     box-shadow: inset 0 2px 4px var(--shadow);
-    width: 100%;
+  }
+
+  input:disabled {
+    background: var(--secondary);
   }
 
   .submit-btn {
-    padding: var(--button-padding);
+    padding: 0.5rem 1rem;
     border: none;
     border-radius: var(--border-radius);
     background: var(--surface);
@@ -190,8 +243,12 @@
     align-items: center;
     gap: 0.5rem;
     transition: all 0.3s;
-    width: 100%;
-    justify-content: center;
+  }
+
+  .submit-btn:disabled {
+    background: var(--secondary);
+    color: var(--text-secondary);
+    cursor: not-allowed;
   }
 
   .submit-btn:hover:not(:disabled) {
@@ -200,43 +257,97 @@
     transform: translateY(-2px);
   }
 
-  .toggle-canvas-btn {
-    margin-top: 0.75rem;
-    background: var(--primary);
-    color: white;
-    padding: 0.75rem 1.25rem;
-    border: none;
-    border-radius: var(--border-radius);
-    font-size: 1.125rem;
+  .stats {
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
-    transition: transform 0.2s;
-    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    justify-content: space-between;
   }
 
-  .toggle-canvas-btn:hover {
-    background: #4e44c0;
-    transform: translateY(-3px);
+  .stat {
+    padding: 1rem;
+    background: var(--secondary);
+    border-radius: var(--border-radius);
+    text-align: center;
+    box-shadow: 0 2px 4px var(--shadow);
+  }
+
+  .stat .label {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+  }
+
+  .stat .value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-hover);
+  }
+
+  .content-section {
+    margin-top: 2rem;
+  }
+
+  .links-list {
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    background: var(--surface);
+    box-shadow: 0 2px 4px var(--shadow);
   }
 
   .link-item {
-    padding: 0.5rem;
+    padding: 0.5rem 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid var(--secondary);
-    white-space: nowrap;
-    gap: 8px;
+  }
+
+  .link-item:last-child {
+    border-bottom: none;
+  }
+
+  .link-url {
+    color: var(--primary-hover);
+    word-break: break-word;
   }
 
   .status {
     background: var(--primary);
     color: white;
-    padding: 0.25rem 0.4rem;
+    padding: 0.25rem 0.5rem;
     border-radius: var(--border-radius);
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     font-weight: bold;
+  }
+
+  .toggle-canvas-btn {
+    margin-top: 1rem;
+    background: var(--primary);
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  .toggle-canvas-btn:hover {
+    transform: translateY(-3px);
+  }
+
+  .spinner {
+    animation: spin 1s linear infinite;
+    width: 16px;
+    height: 16px;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
   }
 </style>

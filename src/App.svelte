@@ -370,6 +370,10 @@
       gap: 0.5rem;
     }
 
+   input {
+      width: 100%;
+    }
+
     .stats {
       flex-direction: column;
       gap: 0.5rem;

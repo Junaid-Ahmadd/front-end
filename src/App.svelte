@@ -224,6 +224,7 @@
     border: none;
     border-radius: var(--border-radius);
     box-shadow: inset 0 2px 4px var(--shadow);
+    width: 100%;
   }
 
   input:disabled {

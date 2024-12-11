@@ -239,6 +239,7 @@
     font-weight: bold;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
     transition: all 0.3s;
   }
@@ -394,9 +395,9 @@
 
     .input-section {
       padding-top: 1rem;
-      padding-right: 0.5rem;
+      padding-right: 1rem;
       padding-bottom: 1rem;
-      padding-left: 0.5rem;
+      padding-left: 1rem;
     }
 
     .url-input {

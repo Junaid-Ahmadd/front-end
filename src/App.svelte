@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import InfiniteCanvas from './lib/InfiniteCanvas.svelte';
-  import { ImageIcon } from 'lucide-svelte';
+  
   
   let url = "";
   let crawledLinks: Array<{ url: string; depth: number }> = [];

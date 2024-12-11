@@ -161,7 +161,6 @@
     --background: black;
     --surface: black;
     --shadow: rgba(255, 255, 255, 0.1);
-    --border-radius: 10px;
     --font-family: 'Roboto', sans-serif;
   }
 
@@ -177,10 +176,10 @@
   .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 2rem;
-    background: linear-gradient(145deg, black, gray);
-    box-shadow: 0 4px 8px var(--shadow);
-    border-radius: var(--border-radius);
+    background: none;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0;
   }
 
   .header {
@@ -192,7 +191,6 @@
     font-size: 2.5rem;
     margin: 0;
     color: white;
-    text-shadow: 2px 2px 4px gray;
   }
 
   .subtitle {
@@ -202,10 +200,6 @@
 
   .input-section {
     margin-bottom: 2rem;
-    padding: 1rem;
-    background: linear-gradient(135deg, gray, black);
-    border-radius: var(--border-radius);
-    box-shadow: 0 4px 8px var(--shadow);
     color: var(--secondary);
   }
 
@@ -219,9 +213,9 @@
     flex: 1;
     padding: 10px;
     border: 2px solid white;
-    border-radius: var(--border-radius);
     background: transparent;
     color: white;
+    font-size: 1rem;
   }
 
   input:disabled {
@@ -232,16 +226,12 @@
   .submit-btn {
     padding: 0.5rem 1rem;
     border: 2px solid white;
-    border-radius: var(--border-radius);
     background: black;
     color: white;
     cursor: pointer;
     font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
     transition: all 0.3s;
+    font-size: 1rem;
   }
 
   .submit-btn:disabled {
@@ -253,7 +243,6 @@
   .submit-btn:hover:not(:disabled) {
     background: white;
     color: black;
-    transform: translateY(-2px);
   }
 
   .stats {
@@ -265,11 +254,10 @@
 
   .stat {
     padding: 1rem;
-    background: linear-gradient(145deg, black, gray);
-    border-radius: var(--border-radius);
-    text-align: center;
-    box-shadow: 0 2px 4px var(--shadow);
+    background: black;
     color: white;
+    text-align: center;
+    box-shadow: none;
   }
 
   .stat .label {
@@ -288,16 +276,14 @@
   }
 
   .links-list {
-    padding: 1rem;
-    border-radius: var(--border-radius);
-    background: linear-gradient(145deg, black, gray);
-    box-shadow: 0 2px 4px var(--shadow);
+    padding: 0;
+    color: white;
   }
 
   .link-item {
     padding: 0.5rem 0;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     border-bottom: 1px solid gray;
   }
@@ -309,13 +295,13 @@
   .link-url {
     color: white;
     word-break: break-word;
+    text-align: left;
   }
 
   .status {
     background: gray;
     color: black;
     padding: 0.25rem 0.5rem;
-    border-radius: var(--border-radius);
     font-size: 0.875rem;
     font-weight: bold;
   }
@@ -326,44 +312,18 @@
     color: white;
     padding: 0.5rem 1rem;
     border: 2px solid white;
-    border-radius: var(--border-radius);
     font-size: 1rem;
     cursor: pointer;
-    transition: transform 0.2s;
-  }
-
-  .toggle-canvas-btn:hover {
-    transform: translateY(-3px);
-  }
-
-  .spinner {
-    animation: spin 1s linear infinite;
-    width: 16px;
-    height: 16px;
-  }
-
-  @keyframes spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
   }
 
   /* Responsive Design */
   @media (max-width: 768px) {
     .container {
-      padding: 1rem;
+      padding: 0;
     }
 
     h1 {
       font-size: 1.8rem;
-    }
-
-    .input-section {
-      flex-direction: column;
-      gap: 0.5rem;
     }
 
     .url-input {
@@ -391,6 +351,10 @@
     .toggle-canvas-btn {
       font-size: 0.9rem;
     }
+
+    #app {
+      padding: 0;
+    }
   }
 
   @media (max-width: 480px) {
@@ -399,10 +363,7 @@
     }
 
     .input-section {
-      padding-top: 1rem;
-      padding-right: 1rem;
-      padding-bottom: 1rem;
-      padding-left: 1rem;
+      padding: 0;
     }
 
     .url-input {
@@ -417,12 +378,9 @@
       width: 100%;
     }
 
-    .stats {
-      flex-direction: column;
-    }
-
     .link-url {
       font-size: 0.85rem;
+      text-align: left;
     }
 
     .status {
@@ -430,4 +388,3 @@
     }
   }
 </style>
-

@@ -154,12 +154,12 @@
 <style>
   /* Global variables for colors and fonts */
   :root {
-    --primary: black;
+    --primary: #111827;
     --secondary: white;
-    --text-primary: black;
+    --text-primary: #111827;
     --text-secondary: gray;
-    --background: black;
-    --surface: black;
+    --background: #111827;
+    --surface: #111827;
     --shadow: rgba(255, 255, 255, 0.1);
     --font-family: 'Roboto', sans-serif;
   }
@@ -213,6 +213,7 @@
     flex: 1;
     padding: 10px;
     border: 2px solid white;
+    border-radius: 10px;
     background: transparent;
     color: white;
     font-size: 1rem;
@@ -226,12 +227,14 @@
   .submit-btn {
     padding: 0.5rem 1rem;
     border: 2px solid white;
-    background: black;
+    border-radius: 10px;
+    background: #111827;
     color: white;
     cursor: pointer;
     font-weight: bold;
     transition: all 0.3s;
     font-size: 1rem;
+    text-align: center;
   }
 
   .submit-btn:disabled {
@@ -242,7 +245,7 @@
 
   .submit-btn:hover:not(:disabled) {
     background: white;
-    color: black;
+    color: #111827;
   }
 
   .stats {
@@ -254,7 +257,7 @@
 
   .stat {
     padding: 1rem;
-    background: black;
+    background: #111827;
     color: white;
     text-align: center;
     box-shadow: none;
@@ -308,10 +311,11 @@
 
   .toggle-canvas-btn {
     margin-top: 1rem;
-    background: black;
+    background: #111827;
     color: white;
     padding: 0.5rem 1rem;
     border: 2px solid white;
+    border-radius: 10px;
     font-size: 1rem;
     cursor: pointer;
   }
@@ -323,7 +327,7 @@
     }
 
     h1 {
-      font-size: 1.8rem;
+      font-size: 2rem;
     }
 
     .url-input {
@@ -359,7 +363,7 @@
 
   @media (max-width: 480px) {
     h1 {
-      font-size: 1.5rem;
+      font-size: 2.5rem;
     }
 
     .input-section {

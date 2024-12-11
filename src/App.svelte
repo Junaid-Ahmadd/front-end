@@ -404,5 +404,8 @@
     .link-url {
       font-size: 0.85rem;
     }
+.status {
+    font-size: 0.7rem;
+  }
   }
 </style>

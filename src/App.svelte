@@ -154,14 +154,13 @@
 <style>
   /* Global variables for colors and fonts */
   :root {
-    --primary: #6c63ff;
-    --primary-hover: #584fd1;
-    --secondary: #f3f4f6;
-    --text-primary: #333;
-    --text-secondary: #666;
-    --background: #f9f9fb;
-    --surface: #fff;
-    --shadow: rgba(0, 0, 0, 0.1);
+    --primary: black;
+    --secondary: white;
+    --text-primary: black;
+    --text-secondary: gray;
+    --background: black;
+    --surface: black;
+    --shadow: rgba(255, 255, 255, 0.1);
     --border-radius: 10px;
     --font-family: 'Roboto', sans-serif;
   }
@@ -179,9 +178,9 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
-    box-shadow: 0 4px 6px var(--shadow);
+    background: linear-gradient(145deg, black, gray);
+    box-shadow: 0 4px 8px var(--shadow);
     border-radius: var(--border-radius);
-    background: var(--surface);
   }
 
   .header {
@@ -192,9 +191,8 @@
   h1 {
     font-size: 2.5rem;
     margin: 0;
-    background: linear-gradient(45deg, var(--primary), var(--primary-hover));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: white;
+    text-shadow: 2px 2px 4px gray;
   }
 
   .subtitle {
@@ -205,10 +203,10 @@
   .input-section {
     margin-bottom: 2rem;
     padding: 1rem;
-    background: linear-gradient(135deg, var(--primary-hover), var(--primary));
+    background: linear-gradient(135deg, gray, black);
     border-radius: var(--border-radius);
-    box-shadow: 0 4px 6px var(--shadow);
-    color: white;
+    box-shadow: 0 4px 8px var(--shadow);
+    color: var(--secondary);
   }
 
   .url-input {
@@ -220,21 +218,23 @@
   input {
     flex: 1;
     padding: 10px;
-    border: none;
+    border: 2px solid white;
     border-radius: var(--border-radius);
-    box-shadow: inset 0 2px 4px var(--shadow);
+    background: transparent;
+    color: white;
   }
 
   input:disabled {
     background: var(--secondary);
+    color: gray;
   }
 
   .submit-btn {
     padding: 0.5rem 1rem;
-    border: none;
+    border: 2px solid white;
     border-radius: var(--border-radius);
-    background: var(--surface);
-    color: var(--primary-hover);
+    background: black;
+    color: white;
     cursor: pointer;
     font-weight: bold;
     display: flex;
@@ -245,14 +245,14 @@
   }
 
   .submit-btn:disabled {
-    background: var(--secondary);
+    background: gray;
     color: var(--text-secondary);
     cursor: not-allowed;
   }
 
   .submit-btn:hover:not(:disabled) {
-    background: var(--primary-hover);
-    color: white;
+    background: white;
+    color: black;
     transform: translateY(-2px);
   }
 
@@ -265,10 +265,11 @@
 
   .stat {
     padding: 1rem;
-    background: var(--secondary);
+    background: linear-gradient(145deg, black, gray);
     border-radius: var(--border-radius);
     text-align: center;
     box-shadow: 0 2px 4px var(--shadow);
+    color: white;
   }
 
   .stat .label {
@@ -279,7 +280,7 @@
   .stat .value {
     font-size: 1.5rem;
     font-weight: bold;
-    color: var(--primary-hover);
+    color: white;
   }
 
   .content-section {
@@ -289,7 +290,7 @@
   .links-list {
     padding: 1rem;
     border-radius: var(--border-radius);
-    background: var(--surface);
+    background: linear-gradient(145deg, black, gray);
     box-shadow: 0 2px 4px var(--shadow);
   }
 
@@ -298,7 +299,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid var(--secondary);
+    border-bottom: 1px solid gray;
   }
 
   .link-item:last-child {
@@ -306,13 +307,13 @@
   }
 
   .link-url {
-    color: var(--primary-hover);
+    color: white;
     word-break: break-word;
   }
 
   .status {
-    background: var(--primary);
-    color: white;
+    background: gray;
+    color: black;
     padding: 0.25rem 0.5rem;
     border-radius: var(--border-radius);
     font-size: 0.875rem;
@@ -321,10 +322,10 @@
 
   .toggle-canvas-btn {
     margin-top: 1rem;
-    background: var(--primary);
+    background: black;
     color: white;
     padding: 0.5rem 1rem;
-    border: none;
+    border: 2px solid white;
     border-radius: var(--border-radius);
     font-size: 1rem;
     cursor: pointer;
@@ -370,7 +371,7 @@
       gap: 0.5rem;
     }
 
-   input {
+    input {
       width: 100%;
     }
 
@@ -429,3 +430,4 @@
     }
   }
 </style>
+

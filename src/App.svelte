@@ -353,7 +353,10 @@
   /* Responsive Design */
   @media (max-width: 768px) {
     .container {
-      padding: 1rem;
+        padding-top: 2rem;
+        padding-right: 1rem;
+        padding-bottom: 2rem;
+        padding-left: 1rem
     }
 
     h1 {
@@ -367,7 +370,7 @@
 
     .url-input {
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 1rem;
     }
 
     .stats {
@@ -395,9 +398,9 @@
 
     .input-section {
       padding-top: 1rem;
-      padding-right: 0.5rem;
+      padding-right: 1rem;
       padding-bottom: 1rem;
-      padding-left: 0.5rem;
+      padding-left: 1rem;
     }
 
     .stats {

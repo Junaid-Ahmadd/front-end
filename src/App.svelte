@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import InfiniteCanvas from './lib/InfiniteCanvas.svelte';
-  
+
   let url = "";
   let crawledLinks: Array<{ url: string; depth: number }> = [];
   let screenshots: Map<string, string> = new Map();
@@ -69,7 +69,6 @@
     };
   });
 </script>
-
 
 <main class="container">
   <div class="header">
@@ -348,6 +347,62 @@
     }
     to {
       transform: rotate(360deg);
+    }
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .container {
+      padding: 1rem;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+    }
+
+    .input-section {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .url-input {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .stats {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .stat {
+      padding: 0.5rem;
+    }
+
+    .links-list {
+      font-size: 0.9rem;
+    }
+
+    .toggle-canvas-btn {
+      font-size: 0.9rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 1.5rem;
+    }
+
+    .input-section {
+      padding: 0.5rem;
+    }
+
+    .stats {
+      flex-direction: column;
+    }
+
+    .link-url {
+      font-size: 0.85rem;
     }
   }
 </style>

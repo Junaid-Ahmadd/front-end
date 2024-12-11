@@ -2,7 +2,6 @@
   import { onMount } from 'svelte';
   import InfiniteCanvas from './lib/InfiniteCanvas.svelte';
   
-  
   let url = "";
   let crawledLinks: Array<{ url: string; depth: number }> = [];
   let screenshots: Map<string, string> = new Map();
@@ -98,7 +97,7 @@
           </svg>
           Processing...
         {:else}
-          <span class="btn-text">Start Crawling</span>
+          <span>🚀 Start Crawling</span>
         {/if}
       </button>
     </div>
@@ -117,15 +116,14 @@
     {/if}
   </div>
 
-  {#if screenshots.size > 0}
-    <button
-      class="view-canvas toggle-canvas-btn"
-      on:click={toggleCanvas}
-    >
-      <ImageIcon class="btn-icon" />
-      <span class="btn-text">{isCanvasOpen ? 'Hide Screenshots' : 'View Screenshots'}</span>
-    </button>
-  {/if}
+{#if screenshots.size > 0}
+      <button
+        class="view-canvas toggle-canvas-btn"
+        on:click={toggleCanvas}
+      >
+        {isCanvasOpen ? 'Hide Screenshots' : 'View Screenshots'}
+      </button>
+    {/if}
 
   <div class="content-section">
     {#if totalLinks > 0}
@@ -141,6 +139,8 @@
         {/each}
       </div>
     {/if}
+
+    
   </div>
 
   {#if isCanvasOpen}
@@ -168,72 +168,186 @@
     --font-family: 'Roboto', sans-serif;
   }
 
-  /* Responsive Base Styles */
+  /* General styles */
   body {
     font-family: var(--font-family);
     color: var(--text-primary);
     background: var(--background);
     margin: 0;
     padding: 0;
-    line-height: 1.6;
-    display: flex;
-    justify-content: center;
   }
 
   .container {
-    width: 100%;
-    max-width: 800px; /* Reduced max-width for better centering */
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 1rem;
+    padding: 2rem;
     box-shadow: 0 4px 6px var(--shadow);
     border-radius: var(--border-radius);
     background: var(--surface);
   }
 
-  /* Overflow prevention and input fixes */
-  input, .submit-btn, .stats, .stat {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  /* Button Text Centering */
-  .btn-text {
+  .header {
     text-align: center;
-    display: inline-block;
-    width: 100%;
+    margin-bottom: 2rem;
   }
 
-  .submit-btn, .toggle-canvas-btn {
+  h1 {
+    font-size: 2.5rem;
+    margin: 0;
+    background: linear-gradient(45deg, var(--primary), var(--primary-hover));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .subtitle {
+    color: var(--text-secondary);
+    font-size: 1rem;
+  }
+
+  .input-section {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, var(--primary-hover), var(--primary));
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px var(--shadow);
+    color: white;
+  }
+
+  .url-input {
     display: flex;
-    justify-content: center;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: inset 0 2px 4px var(--shadow);
+  }
+
+  input:disabled {
+    background: var(--secondary);
+  }
+
+  .submit-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: var(--border-radius);
+    background: var(--surface);
+    color: var(--primary-hover);
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
     align-items: center;
     gap: 0.5rem;
+    transition: all 0.3s;
   }
 
-  .btn-icon {
-    width: 18px;
-    height: 18px;
+  .submit-btn:disabled {
+    background: var(--secondary);
+    color: var(--text-secondary);
+    cursor: not-allowed;
   }
 
-  /* Responsive Adjustments */
-  @media screen and (max-width: 768px) {
-    .submit-btn, .toggle-canvas-btn {
-      width: auto; /* Reduced width */
-      max-width: 250px;
-      margin: 0 auto;
+  .submit-btn:hover:not(:disabled) {
+    background: var(--primary-hover);
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  .stats {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    justify-content: space-between;
+  }
+
+  .stat {
+    padding: 1rem;
+    background: var(--secondary);
+    border-radius: var(--border-radius);
+    text-align: center;
+    box-shadow: 0 2px 4px var(--shadow);
+  }
+
+  .stat .label {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+  }
+
+  .stat .value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-hover);
+  }
+
+  .content-section {
+    margin-top: 2rem;
+  }
+
+  .links-list {
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    background: var(--surface);
+    box-shadow: 0 2px 4px var(--shadow);
+  }
+
+  .link-item {
+    padding: 0.5rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--secondary);
+  }
+
+  .link-item:last-child {
+    border-bottom: none;
+  }
+
+  .link-url {
+    color: var(--primary-hover);
+    word-break: break-word;
+  }
+
+  .status {
+    background: var(--primary);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--border-radius);
+    font-size: 0.875rem;
+    font-weight: bold;
+  }
+
+  .toggle-canvas-btn {
+    margin-top: 1rem;
+    background: var(--primary);
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  .toggle-canvas-btn:hover {
+    transform: translateY(-3px);
+  }
+
+  .spinner {
+    animation: spin 1s linear infinite;
+    width: 16px;
+    height: 16px;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
     }
   }
-
-  /* Link URL Left Alignment */
-  .link-url {
-    text-align: left;
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  /* Remaining styles from previous version */
-  /* ... (rest of the styles remain the same) */
 </style>

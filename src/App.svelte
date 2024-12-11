@@ -166,6 +166,8 @@
     --shadow: rgba(0, 0, 0, 0.1);
     --border-radius: 10px;
     --font-family: 'Roboto', sans-serif;
+    --input-padding: 0.75rem;
+    --button-padding: 0.8rem;
   }
 
   /* General styles */
@@ -190,11 +192,11 @@
 
   .header {
     text-align: center;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
   }
 
   h1 {
-    font-size: 2rem;
+    font-size: 2.25rem;
     margin: 0;
     background: linear-gradient(45deg, var(--primary), var(--primary-hover));
     -webkit-background-clip: text;
@@ -203,12 +205,12 @@
 
   .subtitle {
     color: var(--text-secondary);
-    font-size: 0.875rem;
+    font-size: 1rem;
   }
 
   .input-section {
-    margin-bottom: 1rem;
-    padding: 0.5rem;
+    margin-bottom: 1.5rem;
+    padding: 0.75rem;
     background: linear-gradient(135deg, var(--primary-hover), var(--primary));
     border-radius: var(--border-radius);
     box-shadow: 0 4px 6px var(--shadow);
@@ -217,14 +219,14 @@
 
   .url-input {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.75rem;
     align-items: center;
     flex-wrap: wrap;
   }
 
   input {
     flex: 1;
-    padding: 8px;
+    padding: var(--input-padding);
     border: none;
     border-radius: var(--border-radius);
     box-shadow: inset 0 2px 4px var(--shadow);
@@ -237,7 +239,7 @@
   }
 
   .submit-btn {
-    padding: 0.6rem 1rem;
+    padding: var(--button-padding);
     border: none;
     border-radius: var(--border-radius);
     background: var(--surface);
@@ -266,7 +268,7 @@
 
   .stats {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.75rem;
     margin-top: 1rem;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -274,7 +276,7 @@
 
   .stat {
     flex: 1 1 calc(50% - 0.5rem);
-    padding: 0.5rem;
+    padding: 1rem;
     background: var(--secondary);
     border-radius: var(--border-radius);
     text-align: center;
@@ -283,21 +285,21 @@
 
   .stat .label {
     color: var(--text-secondary);
-    font-size: 0.75rem;
+    font-size: 0.9rem;
   }
 
   .stat .value {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-weight: bold;
     color: var(--primary-hover);
   }
 
   .content-section {
-    margin-top: 1rem;
+    margin-top: 1.5rem;
   }
 
   .links-list {
-    padding: 0.5rem;
+    padding: 0.75rem;
     border-radius: var(--border-radius);
     background: var(--surface);
     box-shadow: 0 2px 4px var(--shadow);
@@ -325,20 +327,20 @@
   .status {
     background: var(--primary);
     color: white;
-    padding: 0.25rem 0.5rem;
+    padding: 0.35rem 0.6rem;
     border-radius: var(--border-radius);
     font-size: 0.875rem;
     font-weight: bold;
   }
 
   .toggle-canvas-btn {
-    margin-top: 0.5rem;
+    margin-top: 0.75rem;
     background: var(--primary);
     color: white;
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1.25rem;
     border: none;
     border-radius: var(--border-radius);
-    font-size: 1rem;
+    font-size: 1.125rem;
     cursor: pointer;
     transition: transform 0.2s;
   }

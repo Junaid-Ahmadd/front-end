@@ -178,21 +178,23 @@
   }
 
   .container {
-    max-width: 1200px;
+    max-width: 100%;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 1rem;
     box-shadow: 0 4px 6px var(--shadow);
     border-radius: var(--border-radius);
     background: var(--surface);
+    display: flex;
+    flex-direction: column;
   }
 
   .header {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
   }
 
   h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     margin: 0;
     background: linear-gradient(45deg, var(--primary), var(--primary-hover));
     -webkit-background-clip: text;
@@ -201,12 +203,12 @@
 
   .subtitle {
     color: var(--text-secondary);
-    font-size: 1rem;
+    font-size: 0.875rem;
   }
 
   .input-section {
-    margin-bottom: 2rem;
-    padding: 1rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
     background: linear-gradient(135deg, var(--primary-hover), var(--primary));
     border-radius: var(--border-radius);
     box-shadow: 0 4px 6px var(--shadow);
@@ -215,16 +217,19 @@
 
   .url-input {
     display: flex;
-    gap: 1rem;
+    gap: 0.5rem;
     align-items: center;
+    flex-wrap: wrap;
   }
 
   input {
     flex: 1;
-    padding: 10px;
+    padding: 8px;
     border: none;
     border-radius: var(--border-radius);
     box-shadow: inset 0 2px 4px var(--shadow);
+    width: 100%;
+    max-width: 500px;
   }
 
   input:disabled {
@@ -232,7 +237,7 @@
   }
 
   .submit-btn {
-    padding: 0.5rem 1rem;
+    padding: 0.6rem 1rem;
     border: none;
     border-radius: var(--border-radius);
     background: var(--surface);
@@ -243,6 +248,8 @@
     align-items: center;
     gap: 0.5rem;
     transition: all 0.3s;
+    width: 100%;
+    justify-content: center;
   }
 
   .submit-btn:disabled {
@@ -259,13 +266,15 @@
 
   .stats {
     display: flex;
-    gap: 1rem;
+    gap: 0.5rem;
     margin-top: 1rem;
     justify-content: space-between;
+    flex-wrap: wrap;
   }
 
   .stat {
-    padding: 1rem;
+    flex: 1 1 calc(50% - 0.5rem);
+    padding: 0.5rem;
     background: var(--secondary);
     border-radius: var(--border-radius);
     text-align: center;
@@ -274,21 +283,21 @@
 
   .stat .label {
     color: var(--text-secondary);
-    font-size: 0.875rem;
+    font-size: 0.75rem;
   }
 
   .stat .value {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: bold;
     color: var(--primary-hover);
   }
 
   .content-section {
-    margin-top: 2rem;
+    margin-top: 1rem;
   }
 
   .links-list {
-    padding: 1rem;
+    padding: 0.5rem;
     border-radius: var(--border-radius);
     background: var(--surface);
     box-shadow: 0 2px 4px var(--shadow);
@@ -300,6 +309,7 @@
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid var(--secondary);
+    flex-wrap: wrap;
   }
 
   .link-item:last-child {
@@ -309,6 +319,7 @@
   .link-url {
     color: var(--primary-hover);
     word-break: break-word;
+    flex: 1 1 100%;
   }
 
   .status {
@@ -321,7 +332,7 @@
   }
 
   .toggle-canvas-btn {
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     background: var(--primary);
     color: white;
     padding: 0.5rem 1rem;

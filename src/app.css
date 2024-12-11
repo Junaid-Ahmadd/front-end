@@ -60,7 +60,7 @@ h1 {
 
 @media (max-width: 480px) {
   #app {
-  padding: 10;
+  padding: 10px;
 }
 }
 

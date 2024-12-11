@@ -116,14 +116,14 @@
     {/if}
   </div>
 
-{#if screenshots.size > 0}
-      <button
-        class="view-canvas toggle-canvas-btn"
-        on:click={toggleCanvas}
-      >
-        {isCanvasOpen ? 'Hide Screenshots' : 'View Screenshots'}
-      </button>
-    {/if}
+  {#if screenshots.size > 0}
+    <button
+      class="view-canvas toggle-canvas-btn"
+      on:click={toggleCanvas}
+    >
+      {isCanvasOpen ? 'Hide Screenshots' : 'View Screenshots'}
+    </button>
+  {/if}
 
   <div class="content-section">
     {#if totalLinks > 0}
@@ -139,8 +139,6 @@
         {/each}
       </div>
     {/if}
-
-    
   </div>
 
   {#if isCanvasOpen}
@@ -168,31 +166,34 @@
     --font-family: 'Roboto', sans-serif;
   }
 
-  /* General styles */
+  /* Responsive Base Styles */
   body {
     font-family: var(--font-family);
     color: var(--text-primary);
     background: var(--background);
     margin: 0;
     padding: 0;
+    line-height: 1.6;
   }
 
   .container {
+    width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 1rem;
     box-shadow: 0 4px 6px var(--shadow);
     border-radius: var(--border-radius);
     background: var(--surface);
   }
 
+  /* Responsive Header */
   .header {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
   }
 
   h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     margin: 0;
     background: linear-gradient(45deg, var(--primary), var(--primary-hover));
     -webkit-background-clip: text;
@@ -201,11 +202,12 @@
 
   .subtitle {
     color: var(--text-secondary);
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 
+  /* Responsive Input Section */
   .input-section {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     padding: 1rem;
     background: linear-gradient(135deg, var(--primary-hover), var(--primary));
     border-radius: var(--border-radius);
@@ -215,20 +217,18 @@
 
   .url-input {
     display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
     align-items: center;
   }
 
   input {
     flex: 1;
+    min-width: 200px;
     padding: 10px;
     border: none;
     border-radius: var(--border-radius);
     box-shadow: inset 0 2px 4px var(--shadow);
-  }
-
-  input:disabled {
-    background: var(--secondary);
   }
 
   .submit-btn {
@@ -245,6 +245,66 @@
     transition: all 0.3s;
   }
 
+  /* Responsive Stats */
+  .stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+    justify-content: space-between;
+  }
+
+  .stat {
+    flex: 1;
+    min-width: 120px;
+    padding: 1rem;
+    background: var(--secondary);
+    border-radius: var(--border-radius);
+    text-align: center;
+    box-shadow: 0 2px 4px var(--shadow);
+  }
+
+  /* Media Queries for Smaller Screens */
+  @media screen and (max-width: 768px) {
+    .container {
+      padding: 0.5rem;
+    }
+
+    .url-input {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    input {
+      width: 100%;
+    }
+
+    .submit-btn {
+      width: 100%;
+    }
+
+    .stats {
+      flex-direction: column;
+    }
+
+    .stat {
+      width: 100%;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+    }
+
+    .subtitle {
+      font-size: 0.8rem;
+    }
+  }
+
+  /* Remaining styles stay the same as in the original code */
+  input:disabled {
+    background: var(--secondary);
+  }
+
   .submit-btn:disabled {
     background: var(--secondary);
     color: var(--text-secondary);
@@ -255,21 +315,6 @@
     background: var(--primary-hover);
     color: white;
     transform: translateY(-2px);
-  }
-
-  .stats {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
-    justify-content: space-between;
-  }
-
-  .stat {
-    padding: 1rem;
-    background: var(--secondary);
-    border-radius: var(--border-radius);
-    text-align: center;
-    box-shadow: 0 2px 4px var(--shadow);
   }
 
   .stat .label {
@@ -297,6 +342,7 @@
   .link-item {
     padding: 0.5rem 0;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid var(--secondary);
@@ -309,6 +355,8 @@
   .link-url {
     color: var(--primary-hover);
     word-break: break-word;
+    flex: 1;
+    margin-right: 0.5rem;
   }
 
   .status {
@@ -330,6 +378,7 @@
     font-size: 1rem;
     cursor: pointer;
     transition: transform 0.2s;
+    width: 100%;
   }
 
   .toggle-canvas-btn:hover {

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import InfiniteCanvas from './lib/InfiniteCanvas.svelte';
-  
+
   let url = "";
   let crawledLinks: Array<{ url: string; depth: number }> = [];
   let screenshots: Map<string, string> = new Map();
@@ -69,6 +69,7 @@
     };
   });
 </script>
+
 <main class="container">
   <div class="header">
     <h1>Web Crawler & Screenshot Tool</h1>
@@ -154,13 +155,15 @@
 <style>
   /* Global variables for colors and fonts */
   :root {
-    --primary: #111827;
-    --secondary: white;
-    --text-primary: #111827;
-    --text-secondary: gray;
-    --background: #111827;
-    --surface: #111827;
-    --shadow: rgba(255, 255, 255, 0.1);
+    --primary: #6c63ff;
+    --primary-hover: #584fd1;
+    --secondary: #f3f4f6;
+    --text-primary: #333;
+    --text-secondary: #666;
+    --background: #f9f9fb;
+    --surface: #fff;
+    --shadow: rgba(0, 0, 0, 0.1);
+    --border-radius: 10px;
     --font-family: 'Roboto', sans-serif;
   }
 
@@ -176,10 +179,10 @@
   .container {
     max-width: 1200px;
     margin: 0 auto;
-    background: none;
-    box-shadow: none;
-    border-radius: 0;
-    padding: 0;
+    padding: 2rem;
+    box-shadow: 0 4px 6px var(--shadow);
+    border-radius: var(--border-radius);
+    background: var(--surface);
   }
 
   .header {
@@ -190,7 +193,9 @@
   h1 {
     font-size: 2.5rem;
     margin: 0;
-    color: white;
+    background: linear-gradient(45deg, var(--primary), var(--primary-hover));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   .subtitle {
@@ -200,7 +205,11 @@
 
   .input-section {
     margin-bottom: 2rem;
-    color: var(--secondary);
+    padding: 1rem;
+    background: linear-gradient(135deg, var(--primary-hover), var(--primary));
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px var(--shadow);
+    color: white;
   }
 
   .url-input {
@@ -212,40 +221,39 @@
   input {
     flex: 1;
     padding: 10px;
-    border: 2px solid white;
-    border-radius: 10px;
-    background: transparent;
-    color: white;
-    font-size: 1rem;
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: inset 0 2px 4px var(--shadow);
   }
 
   input:disabled {
     background: var(--secondary);
-    color: gray;
   }
 
   .submit-btn {
     padding: 0.5rem 1rem;
-    border: 2px solid white;
-    border-radius: 10px;
-    background: #111827;
-    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    background: var(--surface);
+    color: var(--primary-hover);
     cursor: pointer;
     font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     transition: all 0.3s;
-    font-size: 1rem;
-    text-align: center;
   }
 
   .submit-btn:disabled {
-    background: gray;
+    background: var(--secondary);
     color: var(--text-secondary);
     cursor: not-allowed;
   }
 
   .submit-btn:hover:not(:disabled) {
-    background: white;
-    color: #111827;
+    background: var(--primary-hover);
+    color: white;
+    transform: translateY(-2px);
   }
 
   .stats {
@@ -257,10 +265,10 @@
 
   .stat {
     padding: 1rem;
-    background: #111827;
-    color: white;
+    background: var(--secondary);
+    border-radius: var(--border-radius);
     text-align: center;
-    box-shadow: none;
+    box-shadow: 0 2px 4px var(--shadow);
   }
 
   .stat .label {
@@ -271,7 +279,7 @@
   .stat .value {
     font-size: 1.5rem;
     font-weight: bold;
-    color: white;
+    color: var(--primary-hover);
   }
 
   .content-section {
@@ -279,16 +287,18 @@
   }
 
   .links-list {
-    padding: 0;
-    color: white;
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    background: var(--surface);
+    box-shadow: 0 2px 4px var(--shadow);
   }
 
   .link-item {
     padding: 0.5rem 0;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid var(--secondary);
   }
 
   .link-item:last-child {
@@ -296,47 +306,68 @@
   }
 
   .link-url {
-    color: white;
+    color: var(--primary-hover);
     word-break: break-word;
-    text-align: left;
   }
 
   .status {
-    background: gray;
-    color: black;
+    background: var(--primary);
+    color: white;
     padding: 0.25rem 0.5rem;
+    border-radius: var(--border-radius);
     font-size: 0.875rem;
     font-weight: bold;
   }
 
   .toggle-canvas-btn {
     margin-top: 1rem;
-    background: #111827;
+    background: var(--primary);
     color: white;
     padding: 0.5rem 1rem;
-    border: 2px solid white;
-    border-radius: 10px;
+    border: none;
+    border-radius: var(--border-radius);
     font-size: 1rem;
     cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  .toggle-canvas-btn:hover {
+    transform: translateY(-3px);
+  }
+
+  .spinner {
+    animation: spin 1s linear infinite;
+    width: 16px;
+    height: 16px;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
   }
 
   /* Responsive Design */
   @media (max-width: 768px) {
     .container {
-      padding: 0;
+      padding: 1rem;
     }
 
     h1 {
-      font-size: 2rem;
+      font-size: 1.8rem;
+    }
+
+    .input-section {
+      flex-direction: column;
+      gap: 0.5rem;
     }
 
     .url-input {
       flex-direction: column;
       gap: 0.5rem;
-    }
-
-    input {
-      width: 100%;
     }
 
     .stats {
@@ -355,40 +386,29 @@
     .toggle-canvas-btn {
       font-size: 0.9rem;
     }
-
-    #app {
-      padding: 0;
-    }
   }
 
   @media (max-width: 480px) {
     h1 {
-      font-size: 2.5rem;
+      font-size: 1.5rem;
     }
 
     .input-section {
-      padding: 0;
+      padding-top: 1rem;
+      padding-right: 0.5rem;
+      padding-bottom: 1rem;
+      padding-left: 0.5rem;
     }
 
-    .url-input {
-      width: 100%;
-    }
-
-    input {
-      width: 100%;
-    }
-
-    .submit-btn {
-      width: 100%;
+    .stats {
+      flex-direction: column;
     }
 
     .link-url {
       font-size: 0.85rem;
-      text-align: left;
     }
-
-    .status {
-      font-size: 0.7rem;
-    }
+.status {
+    font-size: 0.7rem;
+  }
   }
 </style>

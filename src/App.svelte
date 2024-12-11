@@ -394,7 +394,10 @@
     }
 
     .input-section {
-      padding: 0.5rem;
+      padding-top: 1rem;
+      padding-right: 0.5rem;
+      padding-bottom: 1rem;
+      padding-left: 0.5rem;
     }
 
     .stats {

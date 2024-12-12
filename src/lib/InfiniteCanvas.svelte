@@ -178,20 +178,29 @@ let lastTouchPosition = { x: 0, y: 0 };
 let scale = 1;
 
 function handleTouchStart(event) {
+    event.preventDefault(); // Prevent default scrolling
     isTouching = true;
     lastTouchPosition = { x: event.touches[0].clientX, y: event.touches[0].clientY };
 }
 
 function handleTouchMove(event) {
-    if (!isTouching) return;
-    const dx = event.touches[0].clientX - lastTouchPosition.x;
-    const dy = event.touches[0].clientY - lastTouchPosition.y;
-    // Update canvas position based on touch movement
-    // Implement your logic to move the canvas here
-    lastTouchPosition = { x: event.touches[0].clientX, y: event.touches[0].clientY };
+    event.preventDefault(); // Prevent default scrolling
+    if (event.touches.length === 1) {
+        // Handle panning
+        if (!isTouching) return;
+        const dx = event.touches[0].clientX - lastTouchPosition.x;
+        const dy = event.touches[0].clientY - lastTouchPosition.y;
+        // Update canvas position based on touch movement
+        // Implement your logic to move the canvas here
+        lastTouchPosition = { x: event.touches[0].clientX, y: event.touches[0].clientY };
+    } else if (event.touches.length === 2) {
+        // Handle pinch zoom
+        handlePinchZoom(event);
+    }
 }
 
-function handleTouchEnd() {
+function handleTouchEnd(event) {
+    event.preventDefault(); // Prevent default scrolling
     isTouching = false;
 }
 
@@ -208,7 +217,10 @@ function handlePinchZoom(event) {
 
 </script>
 
-<div class="canvas-container" class:open={isOpen}  on:touchstart={handleTouchStart} on:touchmove={handleTouchMove} on:touchend={handleTouchEnd} on:touchmove={handlePinchZoom}>
+<div class="canvas-container" class:open={isOpen} 
+     on:touchstart={handleTouchStart} 
+     on:touchmove={handleTouchMove} 
+     on:touchend={handleTouchEnd}>
   <div class="toolbar">
     <div class="toolbar-left">
       <button on:click={() => viewport.set({ x: 0, y: 0, scale: 1 })}>

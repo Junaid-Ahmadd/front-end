@@ -171,9 +171,44 @@
       initLayout();
     }
   }
+
+  // Touch event handlers for mobile interactions
+let isTouching = false;
+let lastTouchPosition = { x: 0, y: 0 };
+let scale = 1;
+
+function handleTouchStart(event) {
+    isTouching = true;
+    lastTouchPosition = { x: event.touches[0].clientX, y: event.touches[0].clientY };
+}
+
+function handleTouchMove(event) {
+    if (!isTouching) return;
+    const dx = event.touches[0].clientX - lastTouchPosition.x;
+    const dy = event.touches[0].clientY - lastTouchPosition.y;
+    // Update canvas position based on touch movement
+    // Implement your logic to move the canvas here
+    lastTouchPosition = { x: event.touches[0].clientX, y: event.touches[0].clientY };
+}
+
+function handleTouchEnd() {
+    isTouching = false;
+}
+
+function handlePinchZoom(event) {
+    if (event.touches.length === 2) {
+        const distance = Math.hypot(
+            event.touches[0].clientX - event.touches[1].clientX,
+            event.touches[0].clientY - event.touches[1].clientY
+        );
+        scale = distance; // Adjust scaling logic as needed
+        // Implement your logic to zoom the canvas here
+    }
+}
+
 </script>
 
-<div class="canvas-container" class:open={isOpen}>
+<div class="canvas-container" class:open={isOpen}  on:touchstart={handleTouchStart} on:touchmove={handleTouchMove} on:touchend={handleTouchEnd} on:touchmove={handlePinchZoom}>
   <div class="toolbar">
     <div class="toolbar-left">
       <button on:click={() => viewport.set({ x: 0, y: 0, scale: 1 })}>

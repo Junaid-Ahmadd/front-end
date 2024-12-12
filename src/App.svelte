@@ -70,7 +70,7 @@
   });
 </script>
 
-<main class="container">
+<main class="container" >
   <div class="header">
     <h1>Web Crawler & Screenshot Tool</h1>
     <p class="subtitle">Uncover website structures and capture visual representations effortlessly.</p>
@@ -141,7 +141,7 @@
 
     
   </div>
-
+  </main>
   {#if isCanvasOpen}
     <InfiniteCanvas
       {screenshots}
@@ -150,7 +150,7 @@
       onClose={toggleCanvas}
     />
   {/if}
-</main>
+
 
 <style>
   /* Global variables for colors and fonts */
@@ -285,6 +285,8 @@
 
   .content-section {
     margin-top: 2rem;
+    position: relative; /* This ensures the canvas is positioned relative to the content-section */
+    height: auto;
   }
 
   .links-list {
@@ -357,7 +359,7 @@
         padding-top: 2rem;
         padding-right: 1rem;
         padding-bottom: 2rem;
-        padding-left: 1rem
+        padding-left: 1rem;
     }
 
     h1 {
@@ -393,6 +395,8 @@
   }
 
   @media (max-width: 480px) {
+
+    
     h1 {
       font-size: 2rem;
     }

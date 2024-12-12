@@ -19,6 +19,9 @@
     damping: 0.6
   });
 
+  // Initialize layout variable if needed
+  let layout = new Map<string, { x: number, y: number, width: number, height: number }>();
+
   onMount(() => {
     const fabricCanvas = new fabric.Canvas('canvas', {
       width: window.innerWidth,

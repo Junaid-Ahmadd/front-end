@@ -120,6 +120,7 @@
     });
   }
   
+  
   function stopDragging() {
     isDragging = false;
     canvas.style.cursor = 'grab';
@@ -205,7 +206,7 @@
   >
     <div
       class="content"
-      style="transform: translate({$viewport.x}px, {$viewport.y}px) scale({$viewport.scale})"
+      style="transform: translate({$viewport.x}px, {$viewport.y}px) scale({$viewport.scale}); width: 100%;"
     >
       <div class="grid"></div>
       {#each [...layout.entries()] as [url, pos]}
@@ -235,7 +236,7 @@
 
 <style>
   .canvas-container {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -265,7 +266,16 @@
     align-items: center;
     padding: 0 16px;
     z-index: 1;
-    background-color: #0F172A;
+    background-color: #635AEA;
+    color: white;
+  }
+
+  .toolbar button {
+    color: white; /* Set the button color to white */
+  }
+
+  .toolbar svg {
+    stroke: white; /* Set the icon stroke color to white */
   }
   
   .toolbar-left,
@@ -341,19 +351,31 @@
   button:hover {
     background: var(--surface-4);
   }
-  
-  .minimap {
-    position: fixed;
-    bottom: 16px;
-    right: 16px;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    background: var(--surface);
-    opacity: 0.75;
-    transition: opacity 0.2s ease;
+
+  .content {
+    
+    width: 100%; /* New CSS rule for mobile devices */
   }
-  
-  .minimap:hover {
-    opacity: 1;
+  /* ... (Existing code) */
+  @media (max-width: 768px) {
+    /* ... (Existing code) */
+    .content {
+      width: 100%; /* Ensure content width is 100% on mobile */
+    }
+    .toolbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 10;/* Ensure toolbar stays on top */
+      transform: none;
+    }
+  }
+
+  @media (min-width: 768px) {
+    /* ... (Existing code) */
+    .content {
+      width: 100%; /* Ensure content width is 100% on desktop */
+    }
   }
 </style>

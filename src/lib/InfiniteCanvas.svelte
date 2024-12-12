@@ -69,6 +69,7 @@
   
   function handleWheel(event: WheelEvent) {
     event.preventDefault();
+    event.stopPropagation(); // Prevent page scrolling
     
     if (event.ctrlKey || event.metaKey) {
       // Zoom
@@ -173,48 +174,69 @@
   }
 
   // Touch event handlers for mobile interactions
-let isTouching = false;
-let lastTouchPosition = { x: 0, y: 0 };
-let scale = 1;
+  let isTouching = false;
+  let lastTouchPosition = { x: 0, y: 0 };
+  let scale = 1;
 
-function handleTouchStart(event) {
-    event.preventDefault(); // Prevent default scrolling
-    isTouching = true;
-    lastTouchPosition = { x: event.touches[0].clientX, y: event.touches[0].clientY };
-}
+  function handleTouchStart(event) {
+      event.preventDefault(); // Prevent default scrolling
+      event.stopPropagation(); // Prevent touch events from affecting the page
+      isTouching = true;
+      lastTouchPosition = { x: event.touches[0].clientX, y: event.touches[0].clientY };
+  }
 
-function handleTouchMove(event) {
-    event.preventDefault(); // Prevent default scrolling
-    if (event.touches.length === 1) {
-        // Handle panning
-        if (!isTouching) return;
-        const dx = event.touches[0].clientX - lastTouchPosition.x;
-        const dy = event.touches[0].clientY - lastTouchPosition.y;
-        // Update canvas position based on touch movement
-        // Implement your logic to move the canvas here
-        lastTouchPosition = { x: event.touches[0].clientX, y: event.touches[0].clientY };
-    } else if (event.touches.length === 2) {
-        // Handle pinch zoom
-        handlePinchZoom(event);
-    }
-}
+  function handleTouchMove(event) {
+      event.preventDefault(); // Prevent default scrolling
+      event.stopPropagation(); // Prevent touch events from affecting the page
+      if (event.touches.length === 1) {
+          // Handle panning
+          if (!isTouching) return;
+          const dx = event.touches[0].clientX - lastTouchPosition.x;
+          const dy = event.touches[0].clientY - lastTouchPosition.y;
+          viewport.set({
+            ...$viewport,
+            x: $viewport.x - dx,
+            y: $viewport.y - dy
+          });
+          lastTouchPosition = { x: event.touches[0].clientX, y: event.touches[0].clientY };
+      } else if (event.touches.length === 2) {
+          // Handle pinch zoom
+          handlePinchZoom(event);
+      }
+  }
 
-function handleTouchEnd(event) {
-    event.preventDefault(); // Prevent default scrolling
-    isTouching = false;
-}
+  function handleTouchEnd(event) {
+      event.preventDefault(); // Prevent default scrolling
+      event.stopPropagation(); // Prevent touch events from affecting the page
+      isTouching = false;
+  }
 
-function handlePinchZoom(event) {
-    if (event.touches.length === 2) {
-        const distance = Math.hypot(
-            event.touches[0].clientX - event.touches[1].clientX,
-            event.touches[0].clientY - event.touches[1].clientY
-        );
-        scale = distance; // Adjust scaling logic as needed
-        // Implement your logic to zoom the canvas here
-    }
-}
+  function handlePinchZoom(event) {
+      if (event.touches.length === 2) {
+          const dx = event.touches[0].clientX - event.touches[1].clientX;
+          const dy = event.touches[0].clientY - event.touches[1].clientY;
+          const distance = Math.sqrt(dx * dx + dy * dy);
 
+          const deltaScale = distance / scale;
+          const newScale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, $viewport.scale * deltaScale));
+
+          if (newScale !== $viewport.scale) {
+              const rect = canvas.getBoundingClientRect();
+              const centerX = (event.touches[0].clientX + event.touches[1].clientX) / 2 - rect.left;
+              const centerY = (event.touches[0].clientY + event.touches[1].clientY) / 2 - rect.top;
+
+              const focusX = centerX - $viewport.x;
+              const focusY = centerY - $viewport.y;
+
+              viewport.set({
+                  scale: newScale,
+                  x: centerX - focusX * (newScale / $viewport.scale),
+                  y: centerY - focusY * (newScale / $viewport.scale)
+              });
+              scale = distance;
+          }
+      }
+  }
 </script>
 
 <div class="canvas-container" class:open={isOpen} 
@@ -233,174 +255,4 @@ function handlePinchZoom(event) {
     </div>
     <div class="toolbar-right">
       <button on:click={onClose}>
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="6" x2="6" y2="18"/>
-          <line x1="6" y1="6" x2="18" y2="18"/>
-        </svg>
-      </button>
-    </div>
-  </div>
-  
-  <div
-    class="canvas"
-    bind:this={canvas}
-    on:wheel={handleWheel}
-    on:mousedown={startDragging}
-    on:mousemove={handleDrag}
-    on:mouseup={stopDragging}
-    on:mouseleave={stopDragging}
-  >
-    <div
-      class="content"
-      style="transform: translate({$viewport.x}px, {$viewport.y}px) scale({$viewport.scale})"
-    >
-      <div class="grid"></div>
-      {#each [...layout.entries()] as [url, pos]}
-        <div
-          class="screenshot"
-          style="
-            left: {pos.x}px;
-            top: {pos.y}px;
-            width: {pos.width}px;
-            height: {pos.height}px;
-          "
-        >
-          <img
-            src={`data:image/jpeg;base64,${screenshots.get(url)}`}
-            alt={url}
-            draggable="false"
-            on:load={() => console.log(`Setting src for ${url}: data:image/jpeg;base64,${screenshots.get(url)}`)}
-          />
-          <div class="url">{url}</div>
-        </div>
-      {/each}
-    </div>
-  </div>
-  
-  
-</div>
-
-<style>
-  .canvas-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--surface);
-    z-index: 1000;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-  }
-  
-  .canvas-container.open {
-    opacity: 1;
-    pointer-events: all;
-  }
-  
-  .toolbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 48px;
-    background: var(--surface-2);
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 16px;
-    z-index: 1;
-    background-color: #0F172A;
-  }
-  
-  .toolbar-left,
-  .toolbar-right {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-  }
-  
-  .zoom-level {
-    font-size: 14px;
-    color: var(--text-2);
-  }
-  
-  .canvas {
-    width: 100%;
-    height: 100%;
-    cursor: grab;
-    overflow: hidden;
-  }
-  
-  .canvas:active {
-    cursor: grabbing;
-  }
-  
-  .screenshot {
-    position: absolute;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    transition: transform 0.2s ease;
-  }
-  
-  .screenshot:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-  }
-  
-  .screenshot img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-  
-  .screenshot .url {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 8px;
-    background: rgba(0, 0, 0, 0.75);
-    color: white;
-    font-size: 12px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
-  button {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 4px;
-    background: var(--surface-3);
-    color: var(--text);
-    cursor: pointer;
-    transition: background 0.2s ease;
-  }
-  
-  button:hover {
-    background: var(--surface-4);
-  }
-  
-  .minimap {
-    position: fixed;
-    bottom: 16px;
-    right: 16px;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    background: var(--surface);
-    opacity: 0.75;
-    transition: opacity 0.2s ease;
-  }
-  
-  .minimap:hover {
-    opacity: 1;
-  }
-</style>
+        <svg xmlns="http://www.w3.org/200
